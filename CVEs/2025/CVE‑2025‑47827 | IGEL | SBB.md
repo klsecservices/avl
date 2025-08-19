@@ -1,0 +1,14 @@
+| **Vulnerability** | **CVE‑2025‑47827** |
+|-------------------|--------------------|
+| **Type** | Improper Verification of Cryptographic Signature (CWE‑347) allowing Secure Boot bypass |
+| **Description** | In IGEL OS versions before 11, the `igel‑flash‑driver` Linux kernel module fails to properly verify cryptographic signatures of SquashFS root filesystem images. This flaw allows mounting of a crafted root filesystem from an unverified SquashFS image, effectively bypassing Secure Boot. :contentReference[oaicite:0]{index=0} |
+| **Attack Vector** | Local (low complexity, unauthenticated). Exploitation requires boot control or local access to modify boot files or the EFI system partition. :contentReference[oaicite:1]{index=1} |
+| **CVSS v3.1** | 8.4 (High): AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H :contentReference[oaicite:2]{index=2} |
+| **Affected Versions** | IGEL OS 10 and earlier (all builds prior to version 11) :contentReference[oaicite:3]{index=3} |
+| **Fixed Versions** | IGEL OS 11 and 12 are **not affected** and correctly enforce Secure Boot signature verification. :contentReference[oaicite:4]{index=4} |
+| **Impact** | Secure Boot bypass enables booting of untrusted kernels and root filesystems, persistent bootkits or rootkits, arbitrary kernel-level code execution, privilege escalation, denial of service, and data exfiltration. :contentReference[oaicite:5]{index=5} |
+| **Exploit / PoC** | Public PoC available via GitHub repository with boot process diagram and detailed exploitation steps. :contentReference[oaicite:6]{index=6} |
+| **Disclosure Timeline** | Vulnerability disclosed May 29, 2025; IGEL and Microsoft notified earlier; IGEL published ISN‑2025‑22 on June 2, 2025. :contentReference[oaicite:7]{index=7} |
+| **Detection Ideas** | - Validate boot chain and root filesystem signatures <br> - Use rootkit detection tools (e.g. rkhunter) to scan for tampering <br> - Monitor for unexpected SquashFS mounts or tampered boot variables <br> - Employ firmware integrity monitoring (e.g. Eclypsium) for unexpected EFI components. :contentReference[oaicite:8]{index=8} |
+| **Mitigation Strategies** | - Update to IGEL OS 11 or later <br> - Revoke/distrust signing certificate via DBX/MOKX or firmware, or specifically distrust Microsoft 3rd Party UEFI CA <br> - Implement TPM Measured Boot or custom secure boot keys, restrict boot media and firmware access. :contentReference[oaicite:9]{index=9} |
+| **References** | - NVD entry (CVE‑2025‑47827) :contentReference[oaicite:10]{index=10} <br> - IGEL Security Notice ISN‑2025‑22 :contentReference[oaicite:11]{index=11} <br> - GitHub PoC repository by Zedeldi :contentReference[oaicite:12]{index=12} <br> - Eclypsium “Hydroph0bia” analysis :contentReference[oaicite:13]{index=13} <br> - Feedly summary (CVSS, mitigation) :contentReference[oaicite:14]{index=14} |
